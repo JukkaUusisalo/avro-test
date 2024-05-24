@@ -11,8 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^20.12.12",
-    "avsc": "^5.7.7",
+    "dotenv": "^16.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "avsc": "^5.7.7"
   }
 }

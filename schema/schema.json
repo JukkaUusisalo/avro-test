@@ -3,7 +3,7 @@
   "name": "User",
   "fields": [
     {"name": "name", "type": "string"},
-    {"name": "age", "type": "int"},
+    {"name": "age", "type": "long"},
     {"name": "email", "type": "string"}
   ]
 }

@@ -1,21 +1,30 @@
-import * as avro from 'avsc';
-import * as fs from 'fs';
-import * as path from 'path';
 
-const schemaPath = path.join(__dirname, 'schema.json');
-const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+import * as avro from 'avsc'
+import * as fs from 'fs'
+import * as path from 'path'
+import dotenv from 'dotenv'
 
-const type = avro.Type.forSchema(schema);
 
-const user = {
-    name: 'John Doe',
-    age: 30,
-    email: 'john.doe@example.com'
-};
+dotenv.config()
 
-const buffer = type.toBuffer(user);
+const schemaLocation:string = process.env.SCHEMA_LOCATION as string
+const outputLocation:string = process.env.OUTPUT_LOCATION as string
+const inputLocation:string = process.env.INPUT_LOCATION as string
 
-const outputPath = path.join(__dirname, 'user.avro');
-fs.writeFileSync(outputPath, buffer);
+const schemaPath = path.join(schemaLocation, 'schema.json')
+const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'))
+const user = fs.readFileSync(path.join(inputLocation,"user.json"),'utf-8')
+
+const type = avro.Type.forSchema(schema)
+
+const avroFilePath = path.join(outputLocation, 'user.avro');
+const avroFileStream = fs.createWriteStream(avroFilePath, { flags: 'w' });
+
+const encoder = new avro.streams.BlockEncoder(type);
+
+encoder.pipe(avroFileStream);
+encoder.write(JSON.parse(user));
+encoder.end();
+
 
 console.log('Data successfully written to user.avro');

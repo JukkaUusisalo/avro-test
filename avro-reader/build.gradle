@@ -1,0 +1,26 @@
+plugins {
+    id "application"
+}
+
+group = 'org.jukka'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+apply plugin : "java"
+ext {
+    javaMainClass = "org.jukka.Main"
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+dependencies {
+    implementation group: 'org.apache.avro', name: 'avro', version: '1.11.3'
+    // https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java
+    implementation group: 'io.github.cdimascio', name: 'dotenv-java', version: '3.0.0'
+}
