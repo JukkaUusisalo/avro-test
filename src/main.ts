@@ -17,14 +17,14 @@ const user = fs.readFileSync(path.join(inputLocation,"user.json"),'utf-8')
 
 const type = avro.Type.forSchema(schema)
 
-const avroFilePath = path.join(outputLocation, 'user.avro');
-const avroFileStream = fs.createWriteStream(avroFilePath, { flags: 'w' });
+const avroFilePath = path.join(outputLocation, 'user.avro')
+const avroFileStream = fs.createWriteStream(avroFilePath, { flags: 'w' })
 
-const encoder = new avro.streams.BlockEncoder(type);
+const encoder = new avro.streams.BlockEncoder(type)
 
-encoder.pipe(avroFileStream);
-encoder.write(JSON.parse(user));
+encoder.pipe(avroFileStream)
+encoder.write(JSON.parse(user))
 encoder.end();
 
 
-console.log('Data successfully written to user.avro');
+console.log('Data successfully written to user.avro')
